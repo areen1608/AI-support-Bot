@@ -1,0 +1,18 @@
+<html>
+<head></head>
+<body>
+<h2>All Conversations</h2>
+<ul>
+    {% for article in conversations %}
+        <li>
+            <div class="border border-gray-300 p-4 rounded-lg">
+                <a href="/conversations" class="text-lg font-semibold text-blue-600 hover:underline"></a>
+                <h5 class="text-lg font-semibold">{{ article }}</h5>
+            </div>
+        </li>
+    {% empty %}     
+        <p>No conversations found.</p>
+    {% endfor %}
+</ul>
+</body>
+</html>

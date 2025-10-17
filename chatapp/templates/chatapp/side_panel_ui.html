@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat UI</title>
+    <style>
+        /* Add your CSS styling here */
+        #side-panel {
+            width: 300px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+        .conversation-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .conversation-item p {
+            margin: 5px 0;
+        }
+        h3 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="side-panel">
+        <h3>Conversation History</h3>
+        <div id="conversation-list">
+            <!-- Conversations will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- JavaScript to fetch and display the conversations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionId = getSessionId(); // A function to retrieve the session ID, modify it as per your implementation
+            fetchConversations(sessionId);
+        });
+
+        function getSessionId() {
+            // Logic to retrieve session ID (could be from a cookie, local storage, etc.)
+            return localStorage.getItem('session_id') || 'default_session_id';
+        }
+
+        function fetchConversations(sessionId) {
+            fetch(`/session_conversations?session_id=${sessionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayConversations(data.conversations);
+                })
+                .catch(error => {
+                    console.error('Error fetching conversations:', error);
+                });
+        }
+
+        function displayConversations(conversations) {
+            const conversationList = document.getElementById('conversation-list');
+            conversationList.innerHTML = ''; // Clear previous data
+
+            conversations.forEach(conv => {
+                const convElement = document.createElement('div');
+                convElement.classList.add('conversation-item');
+                convElement.innerHTML = `
+                    <p><strong>Question:</strong> ${conv.question}</p>
+                    <p><strong>Answer:</strong> ${conv.answer}</p>
+                `;
+                conversationList.appendChild(convElement);
+            });
+        }
+    </script>
+
+</body>
+</html>

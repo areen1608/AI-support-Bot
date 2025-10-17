@@ -1,0 +1,7 @@
+{% for item in history %}
+    <li>
+        <strong>{{ item.created }}</strong>: 
+        <span><strong>Q:</strong> {{ item.question }}</span> - 
+        <span><strong>A:</strong> {{ item.answer }}</span>
+    </li>
+{% endfor %}
